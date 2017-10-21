@@ -47,37 +47,80 @@ function callback(results, status) {
   }
 }
 
-function createMarker(location){
-    for( i = 0; i < markers.length; i++ ) {
-        var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
-        bounds.extend(position);
-        marker = new google.maps.Marker({
-            position: position,
-            map: map,
-            title: markers[i][0]
-        });
+// function createMarker(location){
+//     for( i = 0; i < markers.length; i++ ) {
+//         var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+//         bounds.extend(position);
+//         marker = new google.maps.Marker({
+//             position: position,
+//             map: map,
+//             title: markers[i][0]
+//         });
         
-        // Allow each marker to have an info window    
-        google.maps.event.addListener(marker, 'click', (function(marker, i) {
-            return function() {
-                infoWindow.setContent(infoWindowContent[i][0]);
-                infoWindow.open(map, marker);
-            }
-        })(marker, i));
+//         // Allow each marker to have an info window    
+//         google.maps.event.addListener(marker, 'click', (function(marker, i) {
+//             return function() {
+//                 infoWindow.setContent(infoWindowContent[i][0]);
+//                 infoWindow.open(map, marker);
+//             }
+//         })(marker, i));
 
-        // Automatically center the map fitting all markers on the screen
-        map.fitBounds(bounds);
-    }
-}
+//         // Automatically center the map fitting all markers on the screen
+//         map.fitBounds(bounds);
+//     }
+// }
 
-function geoCoding(location){
-    queryURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=+evanston&key='+apiKey;
+// function geoCoding(location){
+//     queryURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=+evanston&key='+apiKey;
 
-    $.ajax({
-            url : queryURL,
-            method : "GET"
-        })
-        .done(function(response){
-            console.log(response.results[0].geometry.location);
-        });
-}
+//     $.ajax({
+//             url : queryURL,
+//             method : "GET",
+//             xhrFields: {
+//                 withCredentials: true
+//             },
+//         })
+//         .done(function(response){
+//             console.log(response.results[0].geometry.location);
+//         });
+// }
+
+// directions(location);
+
+// function directions(location){
+//     var directionsService = new google.maps.DirectionsService;
+//     var directionsDisplay = new google.maps.DirectionsRenderer;
+
+//     calculateAndDisplayRoute(directionsService, directionsDisplay);
+// }
+
+// function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+//     directionsService.route({
+//         origin: 'chicago',
+//         destination: 'evanston',
+//         travelMode: 'DRIVING'
+//     }, 
+//     function(response, status) {
+//         if (status === 'OK') {
+//             directionsDisplay.setDirections(response);
+//         } else {
+//             window.alert('Directions request failed due to ' + status);
+//         }
+//     });
+
+//     directionsDisplay.setMap(map);
+// }
+
+
+// currentLocation();
+
+// function currentLocation(){
+//     var pos;
+//     navigator.geolocation.getCurrentPosition(function(position) {
+//             pos = {
+//               lat: position.coords.latitude,
+//               lng: position.coords.longitude
+//             };
+//             console.log(pos);
+//     });
+// }
