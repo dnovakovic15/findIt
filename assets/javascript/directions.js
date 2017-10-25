@@ -1,16 +1,19 @@
-initialize();
+let startLocation, endLocation;
 
-function initialize() {
-  directionsDisplay = new google.maps.DirectionsRenderer();
-  let chicago = new google.maps.LatLng(41.850033, -87.6500523);
-  let mapOptions = {
+function getDirections(start, end) {
+    startLocation = start;
+    endLocation = end;
+
+    directionsDisplay = new google.maps.DirectionsRenderer();
+    let chicago = new google.maps.LatLng(41.850033, -87.6500523);
+    let mapOptions = {
     zoom:7,
     center: chicago
-  }
-  map = new google.maps.Map(document.getElementById('map'), mapOptions);
-  directionsDisplay.setMap(map);
+    }
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    directionsDisplay.setMap(map);
 
-  directions();
+    directions();
 }
 
 function directions(){
@@ -22,8 +25,8 @@ function directions(){
 
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     directionsService.route({
-        origin: 'chicago',
-        destination: 'evanston',
+        origin: startLocation,
+        destination: endLocation,
         travelMode: 'DRIVING'
     }, 
     function(response, status) {

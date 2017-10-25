@@ -48,14 +48,9 @@ function initialize() {
 }
 
 $('.advance').on('click', function(){
-  initialize();
+  getDirections('chicago', 'evanston');
 })
 
-function initialize(){
-  myLocation = $("#myLocation").val().trim();
-  let loc = geoCoding(myLocation);
-  console.log(loc);
-}
 
 
 
