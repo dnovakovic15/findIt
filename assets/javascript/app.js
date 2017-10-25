@@ -2,45 +2,35 @@ let map;
 let service;
 let infowindow;
 let pyrmont;
-let apiKey = 'AIzaSyAWFIyP0ivtZCbMWaqdl7sYS-IIDJkGQHs';
+let myLocation;
 
 $(document).ready(function(){
     initialize();
 })
 
 function initialize() {
-  let locationPromise = new Promise((resolve, reject) => {
-    let myLocation = currentLocation();
-
-    if(myLocation){
-      resolve(myLocation);
-    }
+  getPosition()
+  .then((position) => {
+      console.log(position);
+      createMap(position);
+  })
+  .catch((err) => {
+      console.error(err.message);
   });
 
-  locationPromise.then((successMessage) => {
-    console.log('passed');
-    createMap();
-  })
-  .catch(
-    setTimeout(function(){
-      console.log('Could not retreive locations');
-    }, 5000)
-  );
 
-
-  function createMap(){
-    console.log(myLocation);
-    pyrmont = new google.maps.LatLng(myLocation.lat, myLocation.lng);
+  function createMap(position){
+    pyrmont = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
     map = new google.maps.Map(document.getElementById('map'), {
         center: pyrmont,
-        zoom: 8,
+        zoom: 16,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
       });
 
     let request = {
       location: pyrmont,
-      radius: '500000',
+      radius: '500',
       type: ['restaurant']
     };
 
@@ -55,7 +45,17 @@ function initialize() {
       }
     }
   }
-  }
+}
+
+$('.advance').on('click', function(){
+  initialize();
+})
+
+function initialize(){
+  myLocation = $("#myLocation").val().trim();
+  let loc = geoCoding(myLocation);
+  console.log(loc);
+}
 
 
 

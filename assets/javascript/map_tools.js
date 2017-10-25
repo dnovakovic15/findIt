@@ -1,6 +1,6 @@
 function createMarker(location){
     for( i = 0; i < markers.length; i++ ) {
-        let position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+        var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
         bounds.extend(position);
         marker = new google.maps.Marker({
             position: position,
@@ -21,28 +21,24 @@ function createMarker(location){
     }
 }
 
-function geoCoding(location){
+let apiKey = 'AIzaSyAWFIyP0ivtZCbMWaqdl7sYS-IIDJkGQHs';
+
+function geoCoding(){
     queryURL = 'https://maps.googleapis.com/maps/api/geocode/json?address=+evanston&key='+apiKey;
 
     $.ajax({
             url : queryURL,
             method : "GET",
-            xhrFields: {
-                withCredentials: true
-            },
         })
         .done(function(response){
             console.log(response.results[0].geometry.location);
+            return response.results[0].geometry.location;
         });
 }
 
-function currentLocation(){
-    let pos;
-    navigator.geolocation.getCurrentPosition(function(position) {
-            pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-            console.log(pos);
+
+function getPosition(options){
+    return new Promise(function (resolve, reject) {
+        navigator.geolocation.getCurrentPosition(resolve, reject, options);
     });
 }
