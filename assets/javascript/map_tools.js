@@ -1,23 +1,27 @@
-function createMarker(location){
-    for( i = 0; i < markers.length; i++ ) {
-        var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+function createMarker(location, content, map){
+    let bounds = new google.maps.LatLngBounds();
+    for( i = 0; i < 1; i++ ) {
+        var position = new google.maps.LatLng(location.coords.latitude, location.coords.longitude);
         bounds.extend(position);
-        marker = new google.maps.Marker({
+        let marker = new google.maps.Marker({
             position: position,
             map: map,
-            title: markers[i][0]
+            title: 'Hello World'
         });
         
         // Allow each marker to have an info window    
         google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            let infoWindow = new google.maps.InfoWindow()
+
             return function() {
-                infoWindow.setContent(infoWindowContent[i][0]);
+                infoWindow.setContent(content);
                 infoWindow.open(map, marker);
             }
         })(marker, i));
 
         // Automatically center the map fitting all markers on the screen
-        map.fitBounds(bounds);
+        // map.fitBounds(bounds);
+        // google.maps.event.trigger(map, 'resize');
     }
 }
 
